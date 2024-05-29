@@ -5,30 +5,9 @@ import { createToken } from "../utils/tokens.js"
 export async function register( req, res ) {
   try {
     // defensive check for valid request body
-    if (!req.body) {
-      return res.status( 400 ).json( {message: "Request body is missing!"} );
-    }
-
-    const {username, password} = req.body;
-
-    // defensive check for valid username and password
-    if (!username || !password) {
-      return res.status( 400 ).json( {message: "Username and Password fields are required!"} );
-    }
-
-    // defensive check: the username should be a string
-    if (typeof username !== 'string') {
-      return res.status( 400 ).json( {message: "Username must be a string!"} );
-    }
-
-    // defensive check: the password should be a string
-    if (typeof password !== 'string') {
-      return res.status( 400 ).json( {message: "Password must be a string!"} );
-    }
-
-    // defensive check: restrict username and password length
-    if (username.length > 50 || password.length > 50) {
-      return res.status( 400 ).json( {message: "Username and Password must not exceed 50 characters!"} );
+    const validationError = validateRequestBody( req, res );
+    if (validationError) {
+      return validationError;
     }
 
     // check if the user name exists
@@ -54,30 +33,9 @@ export async function register( req, res ) {
 export async function login( req, res ) {
   try {
     // defensive check for valid request body
-    if (!req.body) {
-      return res.status( 400 ).json( {message: "Request body is missing!"} );
-    }
-
-    const {username, password} = req.body;
-
-    // defensive check for valid username and password
-    if (!username || !password) {
-      return res.status( 400 ).json( {message: "Username and Password fields are required!"} );
-    }
-
-    // defensive check: the username should be a string
-    if (typeof username !== 'string') {
-      return res.status( 400 ).json( {message: "Username must be a string!"} );
-    }
-
-    // defensive check: the password should be a string
-    if (typeof password !== 'string') {
-      return res.status( 400 ).json( {message: "Password must be a string!"} );
-    }
-
-    // defensive check: restrict username and password length
-    if (username.length > 50 || password.length > 50) {
-      return res.status( 400 ).json( {message: "Username and Password must not exceed 50 characters!"} );
+    const validationError = validateRequestBody( req, res );
+    if (validationError) {
+      return validationError;
     }
 
     // check if user registered or not
